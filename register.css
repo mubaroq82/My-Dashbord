@@ -1,0 +1,152 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    background-color: #f4f7fe;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+    overflow-x: hidden;
+}
+
+/* Card Container dengan Animasi Fade In & Slide Up */
+.register-card {
+    background: #ffffff;
+    width: 100%;
+    max-width: 420px;
+    padding: 36px 30px;
+    border-radius: 20px;
+    box-shadow: 0px 18px 40px rgba(112, 144, 176, 0.15);
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.register-card h2 {
+    font-size: 26px;
+    font-weight: 700;
+    color: #2b3674;
+    text-align: center;
+    margin-bottom: 6px;
+}
+
+.register-card p.subtitle {
+    font-size: 14px;
+    color: #707ebe;
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.form-group {
+    margin-bottom: 18px;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #2b3674;
+    margin-bottom: 6px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1.5px solid #e0e5f2;
+    border-radius: 12px;
+    font-size: 14px;
+    outline: none;
+    transition: all 0.25s ease;
+}
+
+.form-group input:focus {
+    border-color: #4318ff;
+    box-shadow: 0px 4px 12px rgba(67, 24, 255, 0.15);
+    transform: translateY(-2px);
+}
+
+.btn-submit {
+    width: 100%;
+    padding: 13px;
+    background-color: #4318ff;
+    color: #ffffff;
+    border: none;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: all 0.25s ease;
+    box-shadow: 0px 10px 20px rgba(67, 24, 255, 0.2);
+}
+
+.btn-submit:hover {
+    background-color: #3311db;
+    transform: translateY(-2px);
+    box-shadow: 0px 14px 24px rgba(67, 24, 255, 0.3);
+}
+
+.btn-submit:active {
+    transform: translateY(0);
+}
+
+.auth-footer {
+    margin-top: 22px;
+    text-align: center;
+    font-size: 13px;
+    color: #707ebe;
+}
+
+.auth-footer a {
+    color: #4318ff;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s ease;
+}
+
+.auth-footer a:hover {
+    color: #3311db;
+    text-decoration: underline;
+}
+
+.alert-error {
+    background-color: #ffe5e5;
+    color: #ee5d50;
+    padding: 10px 14px;
+    border-radius: 10px;
+    font-size: 13px;
+    margin-bottom: 18px;
+    text-align: center;
+}
+
+/* Animasi untuk Efek Transisi Keluar Halaman */
+.page-exit {
+    animation: fadeOutDown 0.4s cubic-bezier(0.7, 0, 0.84, 0) forwards !important;
+}
+
+@keyframes fadeOutDown {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+}

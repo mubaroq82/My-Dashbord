@@ -1,0 +1,89 @@
+.hamburger-btn {
+    display: none; 
+    background: var(--card-bg);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    font-size: 18px;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    transition: 0.2s;
+    flex-shrink: 0;
+}
+
+.hamburger-btn:hover {
+    background-color: var(--accent-light);
+    color: var(--accent-color);
+}
+
+/* 2. Pengaturan Layout Khusus Layar HP (Maksimal lebar 768px) */
+@media (max-width: 768px) {
+    body {
+        display: block; /* Membatalkan flex body desktop */
+    }
+
+    .dashboard-container {
+        display: block;
+    }
+
+    /* Tombol hamburger dimunculkan di HP */
+    .hamburger-btn {
+        display: flex;
+    }
+
+    /* Sidebar diubah menjadi melayang (off-canvas) tersembunyi di kiri */
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: -280px; /* Sembunyikan di luar layar */
+        width: 260px;
+        height: 100vh;
+        z-index: 1000;
+        box-shadow: 5px 0 25px rgba(0, 0, 0, 0.3);
+        transition: left 0.3s ease-in-out;
+    }
+
+    /* Kelas aktif saat tombol hamburger ditekan via JavaScript */
+    .sidebar.sidebar-active {
+        left: 0; 
+    }
+
+    /* Menyesuaikan padding konten utama agar pas di layar HP */
+    .main-content {
+        padding: 20px 16px;
+        width: 100%;
+        overflow-x: hidden;
+    }
+
+    .top-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    /* Menyesuaikan grid agar menjadi 1 kolom di HP */
+    .stats-grid, 
+    .form-grid, 
+    .profile-container {
+        grid-template-columns: 1fr !important;
+    }
+
+    .full-width {
+        grid-column: span 1 !important;
+    }
+}
+@media (max-width: 768px) {
+    /* Membuat container tabel bisa digeser ke samping jika lebarnya melebihi layar HP */
+    #tabel-keuangan {
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .table-custom {
+        min-width: 550px; /* Memastikan tabel tetap luas dan proporsional isinya */
+    }
+}

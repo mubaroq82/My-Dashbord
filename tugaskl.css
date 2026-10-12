@@ -1,0 +1,129 @@
+.task-list-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 15px;
+}
+.task-card {
+    background: var(--card-bg);
+    border: 2px solid var(--border-color);
+    border-radius: 14px;
+    padding: 20px;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    transition: all 0.2s ease;
+    word-break: break-word; /* Mencegah elemen keluar dari card */
+    overflow: hidden;      /* Memastikan isi tidak meluber keluar border */
+}
+.task-card.completed {
+    opacity: 0.7;
+    background-color: rgba(0, 0, 0, 0.02);
+}
+.task-card.completed .task-desc {
+    text-decoration: line-through;
+    color: var(--text-muted);
+}
+.task-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+.task-info-group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+.task-badge-matkul {
+    background-color: rgba(43, 56, 143, 0.1);
+    color: var(--accent-color, #2b388f);
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9em;
+    border: 1px solid var(--border-color);
+}
+.task-badge-deadline {
+    background-color: rgba(245, 158, 11, 0.1);
+    color: #d97706;
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 0.88em;
+    font-weight: 500;
+    border: 1px solid rgba(245, 158, 11, 0.2);
+}
+.task-status-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--bg-main);
+    border: 1px solid var(--border-color);
+    padding: 6px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9em;
+    font-weight: 500;
+    color: var(--text-primary);
+}
+.task-status-toggle input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    accent-color: var(--accent-color, #2b388f);
+}
+.task-desc {
+    font-size: 1rem;
+    color: var(--text-primary);
+    line-height: 1.5;
+    white-space: pre-wrap;     /* Mempertahankan enter tapi tetap membungkus teks */
+    word-wrap: break-word;     /* Memaksa kata/teks panjang turun ke baris berikutnya */
+    overflow-wrap: break-word;
+    padding: 4px 0;
+}
+.task-footer {
+    display: flex;
+    justify-content: flex-start;
+    padding-top: 10px;
+    border-top: 1px dashed var(--border-color);
+}
+.btn-delete-task {
+    background-color: rgba(238, 93, 80, 0.1);
+    color: #ee5d50;
+    border: 1px solid rgba(238, 93, 80, 0.2);
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 0.85em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+.btn-delete-task:hover {
+    background-color: #ee5d50;
+    color: #ffffff;
+}
+
+/* TAMBAHAN: Styling untuk input tanggal (deadline) agar ikon jelas saat Dark Mode */
+input[type="date"] {
+    color-scheme: light;
+}
+
+body.dark-mode input[type="date"] {
+    color-scheme: dark;
+}
+
+@media (max-width: 768px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+    .full-width {
+        grid-column: span 1;
+    }
+}
