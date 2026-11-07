@@ -113,10 +113,17 @@ try {
             margin-bottom: 20px;
             font-size: 14px;
         }
+        /* KONTAINER RESPONSIF TABEL AGAR BISA DIGESER DI HP */
+        .table-responsive-wrapper {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin-top: 15px;
+        }
         .table-custom {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 15px;
+            min-width: 550px; /* Menjaga isi tabel tetap proporsional dan tidak gepeng */
         }
         .table-custom th, .table-custom td {
             padding: 12px 16px;
@@ -286,51 +293,53 @@ try {
                 </form>
             </div>
 
-            <!-- TABEL RIWAYAT TRANSAKSI (Diberi id="tabel-keuangan") -->
+            <!-- TABEL RIWAYAT TRANSAKSI (DIBUNGKUS TABLE-RESPONSIVE-WRAPPER) -->
             <div class="form-card" id="tabel-keuangan">
                 <h3>📋 Riwayat Transaksi Keuangan</h3>
-                <table class="table-custom">
-                    <thead>
-                        <tr>
-                            <th>Tanggal</th>
-                            <th>Jenis</th>
-                            <th>Kategori</th>
-                            <th>Keterangan</th>
-                            <th>Nominal</th>
-                            <th>Hapus Riwayat</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php if ($list_transaksi && mysqli_num_rows($list_transaksi) > 0): ?>
-                            <?php while ($row = mysqli_fetch_assoc($list_transaksi)): ?>
+                <div class="table-responsive-wrapper">
+                    <table class="table-custom">
+                        <thead>
+                            <tr>
+                                <th>Tanggal</th>
+                                <th>Jenis</th>
+                                <th>Kategori</th>
+                                <th>Keterangan</th>
+                                <th>Nominal</th>
+                                <th>Hapus Riwayat</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php if ($list_transaksi && mysqli_num_rows($list_transaksi) > 0): ?>
+                                <?php while ($row = mysqli_fetch_assoc($list_transaksi)): ?>
+                                    <tr>
+                                        <td><?= date('d/m/Y', strtotime($row['tanggal'])); ?></td>
+                                        <td>
+                                            <span class="<?= $row['jenis'] == 'Pemasukan' ? 'badge-pemasukan' : 'badge-pengeluaran'; ?>">
+                                                <?= $row['jenis']; ?>
+                                            </span>
+                                        </td>
+                                        <td><strong><?= htmlspecialchars($row['kategori']); ?></strong></td>
+                                        <td><?= htmlspecialchars($row['keterangan'] ?: '-'); ?></td>
+                                        <td style="font-weight: 600; color: <?= $row['jenis'] == 'Pemasukan' ? '#047857' : '#ee5d50'; ?>;">
+                                            <?= $row['jenis'] == 'Pemasukan' ? '+' : '-'; ?> Rp <?= number_format($row['nominal'], 0, ',', '.'); ?>
+                                        </td>
+                                        <td>
+                                            <a href="pencatatankeuangan.php?hapus=<?= $row['id']; ?>#tabel-keuangan" class="btn-action-delete" onclick="return confirm('Yakin ingin menghapus catatan ini?');" style="color: var(--danger-color); text-decoration: none; font-weight: 600;">
+                                                <i class="fas fa-trash"></i> Hapus
+                                            </a>
+                                        </td>
+                                    </tr>
+                                <?php endwhile; ?>
+                            <?php else: ?>
                                 <tr>
-                                    <td><?= date('d/m/Y', strtotime($row['tanggal'])); ?></td>
-                                    <td>
-                                        <span class="<?= $row['jenis'] == 'Pemasukan' ? 'badge-pemasukan' : 'badge-pengeluaran'; ?>">
-                                            <?= $row['jenis']; ?>
-                                        </span>
-                                    </td>
-                                    <td><strong><?= htmlspecialchars($row['kategori']); ?></strong></td>
-                                    <td><?= htmlspecialchars($row['keterangan'] ?: '-'); ?></td>
-                                    <td style="font-weight: 600; color: <?= $row['jenis'] == 'Pemasukan' ? '#047857' : '#ee5d50'; ?>;">
-                                        <?= $row['jenis'] == 'Pemasukan' ? '+' : '-'; ?> Rp <?= number_format($row['nominal'], 0, ',', '.'); ?>
-                                    </td>
-                                    <td>
-                                        <a href="pencatatankeuangan.php?hapus=<?= $row['id']; ?>#tabel-keuangan" class="btn-action-delete" onclick="return confirm('Yakin ingin menghapus catatan ini?');" style="color: var(--danger-color); text-decoration: none; font-weight: 600;">
-                                            <i class="fas fa-trash"></i> Hapus
-                                        </a>
+                                    <td colspan="6" style="text-align: center; color: var(--text-muted); padding: 25px;">
+                                        Belum ada catatan keuangan tersimpan.
                                     </td>
                                 </tr>
-                            <?php endwhile; ?>
-                        <?php else: ?>
-                            <tr>
-                                <td colspan="6" style="text-align: center; color: var(--text-muted); padding: 25px;">
-                                    Belum ada catatan keuangan tersimpan.
-                                </td>
-                            </tr>
-                        <?php endif; ?>
-                    </tbody>
-                </table>
+                            <?php endif; ?>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </main>
     </div>

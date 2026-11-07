@@ -1,3 +1,7 @@
+/* ==========================================
+   TAMPILANHP.CSS - STYLING KHUSUS LAYAR HP 
+   ========================================== */
+
 .hamburger-btn {
     display: none; 
     background: var(--card-bg);
@@ -19,71 +23,92 @@
     color: var(--accent-color);
 }
 
-/* 2. Pengaturan Layout Khusus Layar HP (Maksimal lebar 768px) */
 @media (max-width: 768px) {
     body {
-        display: block; /* Membatalkan flex body desktop */
+        display: block !important;
     }
 
     .dashboard-container {
-        display: block;
+        display: block !important;
     }
 
-    /* Tombol hamburger dimunculkan di HP */
     .hamburger-btn {
-        display: flex;
+        display: flex !important;
     }
 
-    /* Sidebar diubah menjadi melayang (off-canvas) tersembunyi di kiri */
     .sidebar {
-        position: fixed;
+        position: fixed !important;
         top: 0;
-        left: -280px; /* Sembunyikan di luar layar */
-        width: 260px;
-        height: 100vh;
+        left: -280px;
+        width: 260px !important;
+        height: 100vh !important;
         z-index: 1000;
         box-shadow: 5px 0 25px rgba(0, 0, 0, 0.3);
-        transition: left 0.3s ease-in-out;
+        transition: left 0.3s ease-in-out !important;
     }
 
-    /* Kelas aktif saat tombol hamburger ditekan via JavaScript */
     .sidebar.sidebar-active {
-        left: 0; 
+        left: 0 !important; 
     }
 
-    /* Menyesuaikan padding konten utama agar pas di layar HP */
     .main-content {
-        padding: 20px 16px;
-        width: 100%;
+        padding: 20px 16px !important;
+        width: 100% !important;
         overflow-x: hidden;
     }
 
+    /* Penyesuaian Header & Tukar Posisi Nama Profil dengan Tombol Selesai */
     .top-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 15px;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 15px !important;
     }
 
-    /* Menyesuaikan grid agar menjadi 1 kolom di HP */
-    .stats-grid, 
+    .header-right-group {
+        width: 100% !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 12px !important;
+    }
+
+    .header-top-row {
+        width: 100% !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+    }
+
+    .btn-submit-custom {
+        width: 100% !important;
+        padding: 10px 14px !important;
+        font-size: 14px !important;
+        border-radius: 10px !important;
+        text-align: center !important;
+    }
+
     .form-grid, 
-    .profile-container {
+    .profile-container,
+    .schedule-grid {
         grid-template-columns: 1fr !important;
+        gap: 14px !important;
     }
 
     .full-width {
         grid-column: span 1 !important;
     }
-}
-@media (max-width: 768px) {
-    /* Membuat container tabel bisa digeser ke samping jika lebarnya melebihi layar HP */
-    #tabel-keuangan {
+
+    .form-card {
+        padding: 16px 12px !important;
+    }
+
+    .table-responsive-wrapper {
         width: 100%;
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
+        margin-top: 15px;
     }
 
     .table-custom {
-        min-width: 550px; /* Memastikan tabel tetap luas dan proporsional isinya */
+        min-width: 500px !important;
     }
 }

@@ -174,10 +174,17 @@ $list_dosen  = mysqli_query($conn, "SELECT * FROM lecturers WHERE user_id = '$us
             margin-bottom: 20px;
             font-size: 14px;
         }
+        /* KONTAINER RESPONSIF TABEL AGAR BISA DIGESER DI HP */
+        .table-responsive-wrapper {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin-top: 15px;
+        }
         .table-custom {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 15px;
+            min-width: 500px; /* Menjaga isi tabel tetap proporsional dan tidak gepeng */
         }
         .table-custom th, .table-custom td {
             padding: 12px 14px;
@@ -228,7 +235,7 @@ $list_dosen  = mysqli_query($conn, "SELECT * FROM lecturers WHERE user_id = '$us
         </aside>
 
         <main class="main-content">
-            <!-- HEADER UTAMA DENGAN HAMBURGER & TOGGLE MODE -->
+            <!-- HEADER UTAMA TETAP SEPERTI SEMULA -->
             <header class="top-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
                 <div class="welcome-text" style="display: flex; align-items: center; gap: 12px;">
                     <!-- TOMBOL HAMBURGER -->
@@ -314,42 +321,44 @@ $list_dosen  = mysqli_query($conn, "SELECT * FROM lecturers WHERE user_id = '$us
                 </form>
             </div>
 
-            <!-- TABEL DAFTAR JADWAL TERPASANG -->
+            <!-- TABEL DAFTAR JADWAL TERPASANG (DIBUNGKUS CONTAINER RESPONSIF) -->
             <div class="form-card">
                 <h3>📋 Daftar Jadwal Kuliah Saat Ini</h3>
-                <table class="table-custom">
-                    <thead>
-                        <tr>
-                            <th>Hari</th>
-                            <th>Mata Kuliah</th>
-                            <th>Jam</th>
-                            <th>Ruangan</th>
-                            <th>Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php if (mysqli_num_rows($list_jadwal) > 0): ?>
-                            <?php while ($row = mysqli_fetch_assoc($list_jadwal)): ?>
-                                <tr>
-                                    <td><strong><?= $row['hari']; ?></strong></td>
-                                    <td><?= htmlspecialchars($row['nama_matkul']); ?></td>
-                                    <td>
-                                        <?= ($row['jam_mulai'] != '00:00:00') ? date('H:i', strtotime($row['jam_mulai'])) . ' - ' . date('H:i', strtotime($row['jam_selesai'])) : '-'; ?>
-                                    </td>
-                                    <td><?= htmlspecialchars($row['ruangan']); ?></td>
-                                    <td>
-                                        <a href="jadwalkledit.php?edit_jadwal=<?= $row['id']; ?>" class="btn-action-edit"><i class="fas fa-edit"></i> Edit</a>
-                                        <a href="jadwalkledit.php?hapus_jadwal=<?= $row['id']; ?>" class="btn-action-delete" onclick="return confirm('Yakin ingin menghapus jadwal ini?');"><i class="fas fa-trash"></i> Hapus</a>
-                                    </td>
-                                </tr>
-                            <?php endwhile; ?>
-                        <?php else: ?>
+                <div class="table-responsive-wrapper">
+                    <table class="table-custom">
+                        <thead>
                             <tr>
-                                <td colspan="5" style="text-align: center; color: var(--text-muted);">Belum ada jadwal tersimpan.</td>
+                                <th>Hari</th>
+                                <th>Mata Kuliah</th>
+                                <th>Jam</th>
+                                <th>Ruangan</th>
+                                <th>Aksi</th>
                             </tr>
-                        <?php endif; ?>
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            <?php if (mysqli_num_rows($list_jadwal) > 0): ?>
+                                <?php while ($row = mysqli_fetch_assoc($list_jadwal)): ?>
+                                    <tr>
+                                        <td><strong><?= $row['hari']; ?></strong></td>
+                                        <td><?= htmlspecialchars($row['nama_matkul']); ?></td>
+                                        <td>
+                                            <?= ($row['jam_mulai'] != '00:00:00') ? date('H:i', strtotime($row['jam_mulai'])) . ' - ' . date('H:i', strtotime($row['jam_selesai'])) : '-'; ?>
+                                        </td>
+                                        <td><?= htmlspecialchars($row['ruangan']); ?></td>
+                                        <td>
+                                            <a href="jadwalkledit.php?edit_jadwal=<?= $row['id']; ?>" class="btn-action-edit"><i class="fas fa-edit"></i> Edit</a>
+                                            <a href="jadwalkledit.php?hapus_jadwal=<?= $row['id']; ?>" class="btn-action-delete" onclick="return confirm('Yakin ingin menghapus jadwal ini?');"><i class="fas fa-trash"></i> Hapus</a>
+                                        </td>
+                                    </tr>
+                                <?php endwhile; ?>
+                            <?php else: ?>
+                                <tr>
+                                    <td colspan="5" style="text-align: center; color: var(--text-muted);">Belum ada jadwal tersimpan.</td>
+                                </tr>
+                            <?php endif; ?>
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
             <!-- FORM TAMBAH / EDIT DOSEN -->
@@ -384,38 +393,40 @@ $list_dosen  = mysqli_query($conn, "SELECT * FROM lecturers WHERE user_id = '$us
                 </form>
             </div>
 
-            <!-- TABEL DAFTAR DOSEN -->
+            <!-- TABEL DAFTAR DOSEN (DIBUNGKUS CONTAINER RESPONSIF) -->
             <div class="form-card">
                 <h3>👥 Daftar Dosen Saat Ini</h3>
-                <table class="table-custom">
-                    <thead>
-                        <tr>
-                            <th>Nama Dosen</th>
-                            <th>Mata Kuliah</th>
-                            <th>No. Telp / WA</th>
-                            <th>Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php if (mysqli_num_rows($list_dosen) > 0): ?>
-                            <?php while ($d = mysqli_fetch_assoc($list_dosen)): ?>
-                                <tr>
-                                    <td><strong><?= htmlspecialchars($d['nama_dosen']); ?></strong></td>
-                                    <td><?= htmlspecialchars($d['matkul']); ?></td>
-                                    <td><?= htmlspecialchars($d['no_telp']); ?></td>
-                                    <td>
-                                        <a href="jadwalkledit.php?edit_dosen=<?= $d['id']; ?>" class="btn-action-edit"><i class="fas fa-edit"></i> Edit</a>
-                                        <a href="jadwalkledit.php?hapus_dosen=<?= $d['id']; ?>" class="btn-action-delete" onclick="return confirm('Yakin ingin menghapus data dosen ini?');"><i class="fas fa-trash"></i> Hapus</a>
-                                    </td>
-                                </tr>
-                            <?php endwhile; ?>
-                        <?php else: ?>
+                <div class="table-responsive-wrapper">
+                    <table class="table-custom">
+                        <thead>
                             <tr>
-                                <td colspan="4" style="text-align: center; color: var(--text-muted);">Belum ada data dosen tersimpan.</td>
+                                <th>Nama Dosen</th>
+                                <th>Mata Kuliah</th>
+                                <th>No. Telp / WA</th>
+                                <th>Aksi</th>
                             </tr>
-                        <?php endif; ?>
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            <?php if (mysqli_num_rows($list_dosen) > 0): ?>
+                                <?php while ($d = mysqli_fetch_assoc($list_dosen)): ?>
+                                    <tr>
+                                        <td><strong><?= htmlspecialchars($d['nama_dosen']); ?></strong></td>
+                                        <td><?= htmlspecialchars($d['matkul']); ?></td>
+                                        <td><?= htmlspecialchars($d['no_telp']); ?></td>
+                                        <td>
+                                            <a href="jadwalkledit.php?edit_dosen=<?= $d['id']; ?>" class="btn-action-edit"><i class="fas fa-edit"></i> Edit</a>
+                                            <a href="jadwalkledit.php?hapus_dosen=<?= $d['id']; ?>" class="btn-action-delete" onclick="return confirm('Yakin ingin menghapus data dosen ini?');"><i class="fas fa-trash"></i> Hapus</a>
+                                        </td>
+                                    </tr>
+                                <?php endwhile; ?>
+                            <?php else: ?>
+                                <tr>
+                                    <td colspan="4" style="text-align: center; color: var(--text-muted);">Belum ada data dosen tersimpan.</td>
+                                </tr>
+                            <?php endif; ?>
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
         </main>

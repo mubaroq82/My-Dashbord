@@ -271,7 +271,7 @@ $query_todo_home = mysqli_query($conn, "SELECT * FROM todolist WHERE user_id = '
                         <?php endwhile; ?>
                     <?php else: ?>
                         <div style="text-align: center; padding: 15px; color: #047857; font-weight: 700; font-size: 1.1rem;">
-                            ✨ TIDAK ADA TUGAS ✨
+                             TIDAK ADA TUGAS 
                         </div>
                     <?php endif; ?>
                 </div>

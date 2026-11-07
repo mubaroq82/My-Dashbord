@@ -1,6 +1,7 @@
 <?php
 session_start();
 require 'koneksi.php';
+date_default_timezone_set('Asia/Jakarta');
 
 if (!isset($_SESSION['login'])) {
     header("Location: login.php");
@@ -120,10 +121,16 @@ $query_dosen = mysqli_query($conn, "SELECT * FROM lecturers WHERE user_id = '$us
             box-shadow: var(--shadow);
             margin-top: 30px;
         }
+        .table-responsive-wrapper {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin-top: 15px;
+        }
         .table-custom {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 15px;
+            min-width: 500px;
         }
         .table-custom th, .table-custom td {
             padding: 12px 16px;
@@ -165,7 +172,7 @@ $query_dosen = mysqli_query($conn, "SELECT * FROM lecturers WHERE user_id = '$us
                     <h1>JADWAL KULIAH 📅</h1>
                 </div>
 
-                <div style="display: flex; align-items: center; gap: 20px;">
+                <div class="header-actions" style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
                     <!-- TOGGLE SWITCH PILL MODE GELAP/TERANG -->
                     <div class="theme-switch-wrapper">
                         <label class="theme-switch" for="checkboxTheme">
@@ -221,32 +228,34 @@ $query_dosen = mysqli_query($conn, "SELECT * FROM lecturers WHERE user_id = '$us
             <!-- SEKSI TABEL LIST DOSEN -->
             <div class="dosen-section">
                 <h2>List Dosen 👨‍🏫</h2>
-                <table class="table-custom">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>NAMA DOSEN</th>
-                            <th>MATKUL</th>
-                            <th>No Telp/WA</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php if (mysqli_num_rows($query_dosen) > 0): ?>
-                            <?php $no = 1; while ($d = mysqli_fetch_assoc($query_dosen)): ?>
-                                <tr>
-                                    <td><?= $no++; ?></td>
-                                    <td><strong><?= htmlspecialchars($d['nama_dosen']); ?></strong></td>
-                                    <td><?= htmlspecialchars($d['matkul']); ?></td>
-                                    <td><?= htmlspecialchars($d['no_telp']); ?></td>
-                                </tr>
-                            <?php endwhile; ?>
-                        <?php else: ?>
+                <div class="table-responsive-wrapper">
+                    <table class="table-custom">
+                        <thead>
                             <tr>
-                                <td colspan="4" style="text-align: center; color: var(--text-muted);">Belum ada data dosen tersimpan.</td>
+                                <th>No</th>
+                                <th>NAMA DOSEN</th>
+                                <th>MATKUL</th>
+                                <th>No Telp/WA</th>
                             </tr>
-                        <?php endif; ?>
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            <?php if (mysqli_num_rows($query_dosen) > 0): ?>
+                                <?php $no = 1; while ($d = mysqli_fetch_assoc($query_dosen)): ?>
+                                    <tr>
+                                        <td><?= $no++; ?></td>
+                                        <td><strong><?= htmlspecialchars($d['nama_dosen']); ?></strong></td>
+                                        <td><?= htmlspecialchars($d['matkul']); ?></td>
+                                        <td><?= htmlspecialchars($d['no_telp']); ?></td>
+                                    </tr>
+                                <?php endwhile; ?>
+                            <?php else: ?>
+                                <tr>
+                                    <td colspan="4" style="text-align: center; color: var(--text-muted);">Belum ada data dosen tersimpan.</td>
+                                    </tr>
+                            <?php endif; ?>
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
         </main>
